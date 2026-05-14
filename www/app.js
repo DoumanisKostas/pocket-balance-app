@@ -857,7 +857,18 @@ exportPdfBtn.addEventListener("click", async () => {
       `${transaction.date} - ${typeLabel} - ${transaction.amount} EUR - ` +
       `${transaction.category} - ${transaction.description} ${debtInfo}`;
 
-    const lines = doc.splitTextToSize(line, 170);
+    const now = new Date();
+
+    const fileName =
+  "PocketBalanceReport_" +
+  now.getFullYear() + "-" +
+  String(now.getMonth() + 1).padStart(2, "0") + "-" +
+  String(now.getDate()).padStart(2, "0") + "_" +
+  String(now.getHours()).padStart(2, "0") + "-" +
+  String(now.getMinutes()).padStart(2, "0") + "-" +
+  String(now.getSeconds()).padStart(2, "0") +
+  ".pdf";
+
 
     doc.text(lines, 20, y);
     y += lines.length * 7;
