@@ -1,0 +1,490 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #eef2f7, #d9e7ff);
+  margin: 0;
+  padding: 16px;
+  color: #222;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 480px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+.balance-card,
+.transaction-form,
+.history,
+.calendar-section,
+.summary-box {
+  transition: 0.25s ease;
+}
+
+.balance-card {
+  background: linear-gradient(135deg, #222, #444);
+  color: white;
+  padding: 24px;
+  border-radius: 22px;
+  text-align: center;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+}
+
+.balance-card:hover,
+.transaction-form:hover,
+.history:hover,
+.calendar-section:hover,
+.summary-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+.balance-card h3 {
+  font-size: 36px;
+  margin: 10px 0 20px;
+}
+
+.salary-box {
+  display: flex;
+  gap: 10px;
+}
+
+.salary-box input {
+  flex: 1;
+}
+
+.salary-box button {
+  width: 90px;
+}
+
+.transaction-form,
+.history,
+.calendar-section {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 16px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+input,
+select,
+button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 10px;
+  border-radius: 14px;
+  border: 1px solid #d0d7e2;
+  font-size: 15px;
+}
+
+input,
+select {
+  background: white;
+  color: #222;
+  transition: 0.2s ease;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #4f8cff;
+  box-shadow: 0 0 0 4px rgba(79, 140, 255, 0.15);
+}
+
+button {
+  background: #222;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.03);
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  background: #f1f3f5;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+li:hover {
+  transform: translateX(4px);
+}
+
+.delete-btn {
+  background: #e63946;
+  width: 42px;
+  padding: 8px;
+  border-radius: 10px;
+  margin-top: 0;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar-header button {
+  width: 48px;
+  margin-top: 0;
+}
+
+.calendar-days,
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  text-align: center;
+}
+
+.calendar-days {
+  font-weight: bold;
+  font-size: 13px;
+  margin: 14px 0 8px;
+  color: #666;
+}
+
+.calendar-day {
+  background: #f1f3f5;
+  padding: 11px 0;
+  border-radius: 14px;
+  cursor: pointer;
+  min-height: 40px;
+  font-size: 14px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.calendar-day:hover {
+  transform: scale(1.05);
+  background: #dce8ff;
+}
+
+.calendar-day.empty {
+  background: transparent;
+  cursor: default;
+}
+
+.calendar-day.empty:hover {
+  transform: none;
+  background: transparent;
+}
+
+.calendar-day.has-transaction {
+  background: #e8f5e9;
+  border: 1px solid #2ecc71;
+  font-weight: bold;
+}
+
+.calendar-day.today {
+  background: #222;
+  color: white;
+  font-weight: bold;
+  border: 2px solid #222;
+}
+
+.selected-day {
+  margin-top: 20px;
+}
+
+.note-form {
+  margin-top: 14px;
+}
+
+.summary-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.summary-box {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 16px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.summary-box span {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.summary-box strong {
+  font-size: 22px;
+}
+
+.income-item {
+  border-left: 5px solid #2ecc71;
+}
+
+.expense-item {
+  border-left: 5px solid #e63946;
+}
+
+
+@media (max-width: 420px) {
+  body {
+    padding: 10px;
+  }
+
+  .balance-card h3 {
+    font-size: 32px;
+  }
+
+  input,
+  select,
+  button {
+    font-size: 14px;
+  }
+
+  .calendar-day {
+    padding: 9px 0;
+    font-size: 13px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: linear-gradient(135deg, #111827, #0f172a);
+    color: white;
+  }
+
+  .transaction-form,
+  .history,
+  .calendar-section,
+  .summary-box {
+    background: rgba(42, 42, 42, 0.92);
+    color: white;
+    box-shadow: none;
+  }
+
+  .summary-box span,
+  .calendar-days {
+    color: #cbd5e1;
+  }
+
+  input,
+  select {
+    background: #3a3a3a;
+    color: white;
+    border: 1px solid #555;
+  }
+
+  button {
+    background: #4f8cff;
+    color: white;
+  }
+
+  .delete-btn {
+    background: #e63946;
+  }
+
+  .calendar-day {
+    background: #2f2f2f;
+    color: white;
+  }
+
+  .calendar-day:hover {
+    background: #374151;
+  }
+
+  .calendar-day.empty {
+    background: transparent;
+  }
+
+  .calendar-day.has-transaction {
+    background: #1f4d2b;
+    border: 1px solid #2ecc71;
+  }
+
+  .calendar-day.today {
+    background: #4f8cff;
+    border: 2px solid #4f8cff;
+  }
+
+  li {
+    background: #2f2f2f;
+    color: white;
+  }
+}
+
+.top-bar {
+  max-width: 480px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-btn {
+  width: 48px;
+  margin-top: 0;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -280px;
+  width: 260px;
+  height: 100vh;
+  background: white;
+  z-index: 1000;
+  padding: 20px;
+  transition: 0.3s ease;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.close-btn {
+  width: 45px;
+  margin-bottom: 20px;
+}
+
+.nav-btn {
+  margin-bottom: 10px;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: none;
+  z-index: 999;
+}
+
+.overlay.show {
+  display: block;
+}
+
+.page {
+  display: none;
+}
+
+.page.active-page {
+  display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+  .sidebar {
+    background: #1f2937;
+    color: white;
+  }
+}
+
+.edit-salary-btn {
+  width: 70px;
+  background: #4f8cff;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.debt-box {
+  background: rgba(255, 255, 255, 0.12);
+  padding: 12px;
+  border-radius: 14px;
+  margin-bottom: 15px;
+}
+
+.debt-box span {
+  display: block;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.debt-box strong {
+  font-size: 22px;
+  color: #ff6b6b;
+}
+
+.has-debt {
+  color: #ff6b6b;
+}
+
+.transaction-form button {
+  margin-top: 14px;
+  height: 54px;
+  font-size: 16px;
+}
+
+.calendar-section {
+  padding-bottom: 24px;
+}
+
+.calendar-grid {
+  margin-bottom: 18px;
+}
+
+.history {
+  min-height: 90px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.calendar-day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 46px;
+  font-size: 16px;
+}
+
+.income-box strong,
+.report-salary-box strong {
+  color: #2ecc71;
+}
+
+.expenses-box strong,
+.report-expenses-box strong,
+.report-debt-box strong {
+  color: #e63946;
+}

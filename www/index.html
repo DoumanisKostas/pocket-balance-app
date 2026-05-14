@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Pocket Balance</title>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#222222">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <div class="top-bar">
+    <button id="menuBtn" class="menu-btn">☰</button>
+    <h2>Pocket Balance</h2>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <button id="closeMenuBtn" class="close-btn">×</button>
+
+    <h2>Menu</h2>
+
+    <button class="nav-btn" data-page="homePage">Home</button>
+    <button class="nav-btn" data-page="reportPage">
+      Monthly Report & Statistics
+    </button>
+  </div>
+
+  <div id="overlay" class="overlay"></div>
+
+  <div id="homePage" class="container page active-page">
+
+    <h1>Pocket Balance</h1>
+
+    <div class="balance-card">
+
+      <h2>Current Balance</h2>
+
+      <h3 id="balance">0€</h3>
+
+      <div class="debt-box">
+        <span>Debt</span>
+        <strong id="debtAmount">0€</strong>
+      </div>
+
+      <div class="salary-box">
+
+        <input
+          type="number"
+          id="salaryInput"
+          placeholder="Enter salary"
+        >
+
+        <button id="addSalaryBtn">
+          Add
+        </button>
+
+         <button id="editSalaryBtn" class="edit-salary-btn">
+    Edit
+  </button>
+
+      </div>
+
+    </div>
+
+    <div class="summary-section">
+
+      <div class="summary-box">
+        <span>Total Income</span>
+        <strong id="totalIncome">0€</strong>
+      </div>
+
+      <div class="summary-box">
+        <span>Total Expenses</span>
+        <strong id="totalExpenses">0€</strong>
+      </div>
+
+    </div>
+
+    <div class="transaction-form">
+
+      <select id="type">
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+      </select>
+
+      <select id="category">
+        <option value="">Select category</option>
+        <option value="Food">Food</option>
+        <option value="Coffee">Coffee</option>
+        <option value="Fuel">Fuel</option>
+        <option value="Bills">Bills</option>
+        <option value="Super Market">Super Market</option>
+        <option value="Salary">Salary</option>
+        <option value="Freelance">Freelance</option>
+        <option value="Gift">Gift</option>
+        <option value="Refund">Refund</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <input type="text" id="description" placeholder="Description">
+
+      <input type="number" id="amount" placeholder="Amount">
+
+      <input type="date" id="date">
+
+      <button id="addTransactionBtn">
+        Add Transaction
+      </button>
+
+    </div>
+
+    <div class="history">
+
+      <h2>History</h2>
+
+      <ul id="transactionList"></ul>
+
+    </div>
+
+    <div class="calendar-section">
+
+      <h2>Calendar</h2>
+
+      <div class="calendar-header">
+        <button id="prevMonthBtn">‹</button>
+        <h3 id="calendarTitle"></h3>
+        <button id="nextMonthBtn">›</button>
+      </div>
+
+      <div class="calendar-days">
+        <span>Mon</span>
+        <span>Tue</span>
+        <span>Wed</span>
+        <span>Thu</span>
+        <span>Fri</span>
+        <span>Sat</span>
+        <span>Sun</span>
+      </div>
+
+      <div id="calendarGrid" class="calendar-grid"></div>
+
+      <div class="selected-day">
+
+        <h3 id="selectedDateTitle">Select a day</h3>
+
+        <ul id="selectedDayTransactions"></ul>
+
+        <div class="note-form">
+
+  <input
+    type="text"
+    id="noteInput"
+    placeholder="Reminder title, e.g. Doctor"
+  >
+
+  <input
+    type="number"
+    id="noteCost"
+    placeholder="Cost, e.g. 50"
+  >
+
+  <input
+    type="time"
+    id="noteTime"
+    value="10:00"
+  >
+
+  <select id="notifyBefore">
+    <option value="0">Notify same day</option>
+    <option value="1">Notify 1 day before</option>
+    <option value="2">Notify 2 days before</option>
+  </select>
+
+  <button id="addNoteBtn">
+    Add Reminder
+  </button>
+
+</div>
+
+        <h3>Notes</h3>
+
+        <ul id="selectedDayNotes"></ul>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div id="reportPage" class="container page">
+
+    <h1>Monthly Report & Statistics</h1>
+
+    <div class="summary-box">
+      <span>Previous Balance</span>
+      <strong id="reportPreviousBalance">0€</strong>
+    </div>
+
+    <div class="summary-box report-salary-box">
+  <span>Total Salary</span>
+  <strong id="reportIncome">0€</strong>
+</div>
+
+    <div class="summary-box report-expenses-box">
+  <span>Total Expenses</span>
+  <strong id="reportExpenses">0€</strong>
+</div>
+
+    <div class="summary-box">
+      <span>Final Balance</span>
+      <strong id="reportFinalBalance">0€</strong>
+    </div>
+
+    <div class="summary-box income-box">
+  <span>Total Income</span>
+  <strong id="reportExtraIncome">0€</strong>
+</div>
+
+    <div class="summary-box report-debt-box">
+  <span>Current Debt</span>
+  <strong id="reportDebt">0€</strong>
+</div>
+
+    <button id="exportPdfBtn">
+  Export Monthly Report PDF
+</button>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script src="app.js"></script>
+
+</body>
+</html>
