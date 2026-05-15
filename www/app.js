@@ -49,8 +49,6 @@ const overlay = document.getElementById("overlay");
 const navBtns = document.querySelectorAll(".nav-btn");
 const pages = document.querySelectorAll(".page");
 
-const exportPdfBtn = document.getElementById("exportPdfBtn");
-
 let currentDate = new Date();
 
 async function requestNotificationPermission() {
@@ -793,130 +791,6 @@ navBtns.forEach(btn => {
   });
 });
 
-exportPdfBtn.addEventListener("click", async () => {
-  try {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    let y = 20;
-    let totalSalary = 0;
-    let totalIncome = 0;
-    let totalExpenses = 0;
-
-    transactions.forEach(transaction => {
-      if (transaction.type === "income" && transaction.isSalary) {
-        totalSalary += transaction.amount;
-      } else if (transaction.type === "income") {
-        totalIncome += transaction.amount;
-      } else {
-        totalExpenses += transaction.amount;
-      }
-    });
-
-    let previousBalance =
-      balance - totalSalary - totalIncome + totalExpenses;
-
-    if (debt > 0) {
-      previousBalance -= debt;
-    }
-
-    if (previousBalance < 0) {
-      previousBalance = 0;
-    }
-
-    doc.setFontSize(20);
-    doc.text("Pocket Balance Monthly Report", 20, y);
-    y += 18;
-
-    doc.setFontSize(12);
-    doc.text(`Previous Balance: ${previousBalance} EUR`, 20, y);
-    y += 9;
-    doc.text(`Total Salary: ${totalSalary} EUR`, 20, y);
-    y += 9;
-    doc.text(`Total Income: ${totalIncome} EUR`, 20, y);
-    y += 9;
-    doc.text(`Total Expenses: ${totalExpenses} EUR`, 20, y);
-    y += 9;
-    doc.text(`Current Debt: ${debt} EUR`, 20, y);
-    y += 9;
-    doc.text(`Final Balance: ${balance} EUR`, 20, y);
-    y += 18;
-
-    doc.setFontSize(16);
-    doc.text("Transactions", 20, y);
-    y += 12;
-    doc.setFontSize(10);
-
-    transactions.forEach(transaction => {
-      const debtInfo = getDebtInfo(transaction)
-        .replaceAll("€", "EUR")
-        .replaceAll("|", "-");
-
-      const typeLabel = transaction.type === "income" ? "INCOME" : "EXPENSE";
-
-      const line =
-        `${transaction.date} - ${typeLabel} - ${transaction.amount} EUR - ` +
-        `${transaction.category} - ${transaction.description} ${debtInfo}`;
-
-      const lines = doc.splitTextToSize(line, 170);
-      doc.text(lines, 20, y);
-
-      y += lines.length * 7;
-
-      if (y > 280) {
-        doc.addPage();
-        y = 20;
-      }
-    });
-
-    const now = new Date();
-
-    const fileName =
-      "PocketBalanceReport_" +
-      now.getFullYear() + "-" +
-      String(now.getMonth() + 1).padStart(2, "0") + "-" +
-      String(now.getDate()).padStart(2, "0") + "_" +
-      String(now.getHours()).padStart(2, "0") + "-" +
-      String(now.getMinutes()).padStart(2, "0") + "-" +
-      String(now.getSeconds()).padStart(2, "0") +
-      ".pdf";
-
-    if (window.Capacitor && Capacitor.Plugins.Filesystem) {
-      const { Filesystem } = Capacitor.Plugins;
-
-      const pdfBase64 = doc.output("datauristring").split(",")[1];
-
-      await Filesystem.writeFile({
-        path: fileName,
-        data: pdfBase64,
-        directory: "CACHE"
-      });
-
-      if (Capacitor.Plugins.Share) {
-        const { Share } = Capacitor.Plugins;
-
-        const fileUri = await Filesystem.getUri({
-          path: fileName,
-          directory: "CACHE"
-        });
-
-        await Share.share({
-          title: "Pocket Balance Report",
-          text: "Monthly financial report",
-          url: fileUri.uri,
-          dialogTitle: "Save or Share PDF"
-        });
-      } else {
-        alert("PDF created: " + fileName);
-      }
-    } else {
-      doc.save(fileName);
-    }
-  } catch (error) {
-    console.error("PDF ERROR:", error);
-    alert("PDF ERROR: " + (error.message || JSON.stringify(error)));
-  }
-});
 
 requestNotificationPermission();
 
